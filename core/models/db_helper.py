@@ -33,7 +33,7 @@ class DatabaseHelper:
     async def session_dependency(self) -> AsyncSession:
         async with self.get_scoped_session()() as session:
             yield session
-            await session.remove()
+            await session.close()
         
 
 db_helper = DatabaseHelper(url=settings.db_url, echo=settings.db_echo)
