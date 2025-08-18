@@ -6,7 +6,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .base import Base
 
 if TYPE_CHECKING:
-    from .user import User
+    from .user import User # импорт User произойдёт только для анализаторов типов, в рантайме — нет
 
 
 class Post(Base):
@@ -15,3 +15,4 @@ class Post(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
 
     user: Mapped["User"] = relationship(back_populates="posts")
+    
