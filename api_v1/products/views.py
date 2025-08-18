@@ -1,15 +1,14 @@
 """Views"""
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.models import db_helper
 from core.models import Product as ProductORM
+from core.models import db_helper
 
 from . import crud
-from .schemas import Product, ProductCreate, ProductUpdate, ProductUpdatePartial
 from .dependencies import product_by_id
-
+from .schemas import Product, ProductCreate, ProductUpdate, ProductUpdatePartial
 
 router = APIRouter(tags=["Products"])
 

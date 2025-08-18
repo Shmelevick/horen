@@ -2,8 +2,6 @@
 CRUD
 """
 from icecream import ic
-
-
 from sqlalchemy import select
 from sqlalchemy.engine import Result
 from sqlalchemy.ext.asyncio import AsyncSession
