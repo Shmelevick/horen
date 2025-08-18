@@ -10,7 +10,7 @@ if TYPE_CHECKING:
     from .user import User # импорт User произойдёт только для анализаторов типов, в рантайме — нет
 
 
-class Post(UserRelationMixin, Base):
+class Profile(UserRelationMixin, Base):
     _user_id_unique = True
     _user_back_populates = "profile"
 
