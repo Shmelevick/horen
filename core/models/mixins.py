@@ -8,6 +8,7 @@ if TYPE_CHECKING:
 
 
 class UserRelationMixin:
+    _user_id_nullable: bool = False
     _user_id_unique: bool = False
     _user_back_populates: str | None = None
 
@@ -16,6 +17,7 @@ class UserRelationMixin:
         return mapped_column(
             ForeignKey("user.id"),
             unique=cls._user_id_unique,
+            nullable=cls._user_id_nullable,
         )
 
     @declared_attr
