@@ -6,9 +6,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .base import Base
 from .mixins import UserRelationMixin
 
-if TYPE_CHECKING:
-    from .user import User # импорт User произойдёт только для анализаторов типов, в рантайме — нет
-
 
 class Profile(UserRelationMixin, Base):
     _user_id_unique = True

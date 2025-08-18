@@ -5,7 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
 
-if TYPE_CHECKING:
+if TYPE_CHECKING: # импорт User произойдёт только для анализаторов типов, в рантайме — нет
     from .post import Post
     from .profile import Profile
 
