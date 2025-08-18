@@ -23,17 +23,19 @@ class DatabaseHelper:
             expire_on_commit=False,
         )
 
-    def get_scoped_session(self):
-        session = async_scoped_session(
-            session_factory=self.session_factory,
-            scopefunc=current_task,
+        self.scoped_session = async_scoped_session(
+            self.session_factory, scopefunc=current_task,
         )
-        return session
     
+    def get_scoped_session(self):
+            return self.scoped_session
+
     async def session_dependency(self) -> AsyncSession:
-        async with self.get_scoped_session()() as session:
+        session = self.scoped_session()
+        try:
             yield session
-            await session.close()
+        finally:
+            await self.scoped_session.remove()
         
 
 db_helper = DatabaseHelper(url=settings.db_url, echo=settings.db_echo)
