@@ -38,4 +38,4 @@ class DatabaseHelper:
             await self.scoped_session.remove()
         
 
-db_helper = DatabaseHelper(url=settings.db_url, echo=settings.db_echo)
+db_helper = DatabaseHelper(url=settings.db.url, echo=settings.db.echo)
