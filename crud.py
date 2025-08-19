@@ -77,6 +77,38 @@ async def get_posts_with_authors(session: AsyncSession):
         print("author", post.user)
 
 
+async def get_users_with_posts_and_profiles(session: AsyncSession):
+    stmt = (
+        select(User).options(selectinload(User.posts), joinedload(User.profile), ).order_by(User.id)
+    )
+    users = await session.scalars(stmt)
+
+    # ic([user for user in users])
+    for user in users: # type: User 
+        print("**" * 10)
+        print(user, user.profile and user.profile.first_name)
+        for post in user.posts:
+            print("-", post)
+
+
+async def get_profiles_with_users_and_users_with_posts(session: AsyncSession):
+    stmt = (
+        select(Profile)
+        .join(Profile.user) # для .where
+        .options(
+            joinedload(Profile.user).selectinload(User.posts),
+        )
+        .where(User.username == "john")
+        .order_by(Profile.id)
+    )
+
+    profiles = await session.scalars(stmt)
+
+    for profile in profiles:
+        print(profile, profile.user)
+        print(profile.user.posts)
+
+
 async def main():
     async with db_helper.session_factory() as session:
         # await create_user(session=session, username="john")
@@ -95,8 +127,10 @@ async def main():
         # await create_posts(session, user_john.id, "SQLA 2.0", "SQLA Joins")
         # await create_posts(session, user_sam.id, "FastAPI Advanced", "FastAPI more")
 
-        await get_users_with_posts(session=session)
-        await get_posts_with_authors(session=session)
+        # await get_users_with_posts(session=session)
+        # await get_posts_with_authors(session=session)
+        # await get_users_with_posts_and_profiles(session)
+        await get_profiles_with_users_and_users_with_posts(session)
 
 
 if __name__ == "__main__":
