@@ -109,7 +109,7 @@ async def get_profiles_with_users_and_users_with_posts(session: AsyncSession):
         print(profile.user.posts)
 
 
-async def main():
+async def make_basic_shit():
     async with db_helper.session_factory() as session:
         # await create_user(session=session, username="john")
         # await create_user(session=session, username="sam")
@@ -131,6 +131,13 @@ async def main():
         # await get_posts_with_authors(session=session)
         # await get_users_with_posts_and_profiles(session)
         await get_profiles_with_users_and_users_with_posts(session)
+
+
+async def demo_m2m(session: AsyncSession):
+    pass
+
+
+async def main():
 
 
 if __name__ == "__main__":
